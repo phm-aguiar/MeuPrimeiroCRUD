@@ -1,20 +1,23 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"os"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/phm-aguiar/MeuPrimeiroCRUD/src/controller/routes"
 )
 
 func main() {
-	fmt.Printf("salve CRUD\n")
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+	router := gin.Default()
+	routes.InitRoutes(&router.RouterGroup)
 
-	fmt.Println(os.Getenv("TESTE"))
+	if err := router.Run(":8080"); err != nil {
+		log.Fatal(err)
+	}
 
 }
